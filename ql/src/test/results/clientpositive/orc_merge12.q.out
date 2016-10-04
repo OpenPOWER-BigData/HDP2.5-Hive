@@ -1,0 +1,140 @@
+PREHOOK: query: CREATE TABLE `alltypesorc3xcols`(
+  `atinyint` tinyint,
+  `asmallint` smallint,
+  `aint` int,
+  `abigint` bigint,
+  `afloat` float,
+  `adouble` double,
+  `astring1` string,
+  `astring2` string,
+  `atimestamp1` timestamp,
+  `atimestamp2` timestamp,
+  `aboolean1` boolean,
+  `aboolean2` boolean,
+  `btinyint` tinyint,
+  `bsmallint` smallint,
+  `bint` int,
+  `bbigint` bigint,
+  `bfloat` float,
+  `bdouble` double,
+  `bstring1` string,
+  `bstring2` string,
+  `btimestamp1` timestamp,
+  `btimestamp2` timestamp,
+  `bboolean1` boolean,
+  `bboolean2` boolean,
+  `ctinyint` tinyint,
+  `csmallint` smallint,
+  `cint` int,
+  `cbigint` bigint,
+  `cfloat` float,
+  `cdouble` double,
+  `cstring1` string,
+  `cstring2` string,
+  `ctimestamp1` timestamp,
+  `ctimestamp2` timestamp,
+  `cboolean1` boolean,
+  `cboolean2` boolean) stored as ORC
+PREHOOK: type: CREATETABLE
+PREHOOK: Output: database:default
+PREHOOK: Output: default@alltypesorc3xcols
+POSTHOOK: query: CREATE TABLE `alltypesorc3xcols`(
+  `atinyint` tinyint,
+  `asmallint` smallint,
+  `aint` int,
+  `abigint` bigint,
+  `afloat` float,
+  `adouble` double,
+  `astring1` string,
+  `astring2` string,
+  `atimestamp1` timestamp,
+  `atimestamp2` timestamp,
+  `aboolean1` boolean,
+  `aboolean2` boolean,
+  `btinyint` tinyint,
+  `bsmallint` smallint,
+  `bint` int,
+  `bbigint` bigint,
+  `bfloat` float,
+  `bdouble` double,
+  `bstring1` string,
+  `bstring2` string,
+  `btimestamp1` timestamp,
+  `btimestamp2` timestamp,
+  `bboolean1` boolean,
+  `bboolean2` boolean,
+  `ctinyint` tinyint,
+  `csmallint` smallint,
+  `cint` int,
+  `cbigint` bigint,
+  `cfloat` float,
+  `cdouble` double,
+  `cstring1` string,
+  `cstring2` string,
+  `ctimestamp1` timestamp,
+  `ctimestamp2` timestamp,
+  `cboolean1` boolean,
+  `cboolean2` boolean) stored as ORC
+POSTHOOK: type: CREATETABLE
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@alltypesorc3xcols
+PREHOOK: query: load data local inpath '../../data/files/alltypesorc3xcols' into table alltypesorc3xcols
+PREHOOK: type: LOAD
+#### A masked pattern was here ####
+PREHOOK: Output: default@alltypesorc3xcols
+POSTHOOK: query: load data local inpath '../../data/files/alltypesorc3xcols' into table alltypesorc3xcols
+POSTHOOK: type: LOAD
+#### A masked pattern was here ####
+POSTHOOK: Output: default@alltypesorc3xcols
+PREHOOK: query: load data local inpath '../../data/files/alltypesorc3xcols' into table alltypesorc3xcols
+PREHOOK: type: LOAD
+#### A masked pattern was here ####
+PREHOOK: Output: default@alltypesorc3xcols
+POSTHOOK: query: load data local inpath '../../data/files/alltypesorc3xcols' into table alltypesorc3xcols
+POSTHOOK: type: LOAD
+#### A masked pattern was here ####
+POSTHOOK: Output: default@alltypesorc3xcols
+PREHOOK: query: select count(*) from alltypesorc3xcols
+PREHOOK: type: QUERY
+PREHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+POSTHOOK: query: select count(*) from alltypesorc3xcols
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+24576
+PREHOOK: query: select sum(hash(*)) from alltypesorc3xcols
+PREHOOK: type: QUERY
+PREHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+POSTHOOK: query: select sum(hash(*)) from alltypesorc3xcols
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+-302946892512
+PREHOOK: query: alter table alltypesorc3xcols concatenate
+PREHOOK: type: ALTER_TABLE_MERGE
+PREHOOK: Input: default@alltypesorc3xcols
+PREHOOK: Output: default@alltypesorc3xcols
+POSTHOOK: query: alter table alltypesorc3xcols concatenate
+POSTHOOK: type: ALTER_TABLE_MERGE
+POSTHOOK: Input: default@alltypesorc3xcols
+POSTHOOK: Output: default@alltypesorc3xcols
+PREHOOK: query: select count(*) from alltypesorc3xcols
+PREHOOK: type: QUERY
+PREHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+POSTHOOK: query: select count(*) from alltypesorc3xcols
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+24576
+PREHOOK: query: select sum(hash(*)) from alltypesorc3xcols
+PREHOOK: type: QUERY
+PREHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+POSTHOOK: query: select sum(hash(*)) from alltypesorc3xcols
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@alltypesorc3xcols
+#### A masked pattern was here ####
+-302946892512

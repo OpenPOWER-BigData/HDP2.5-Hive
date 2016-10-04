@@ -1,0 +1,78 @@
+PREHOOK: query: drop table foobar_1
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table foobar_1
+POSTHOOK: type: DROPTABLE
+PREHOOK: query: create table foobar_1 ( dummyint int  , dummystr string )
+PREHOOK: type: CREATETABLE
+PREHOOK: Output: database:default
+PREHOOK: Output: default@foobar_1
+POSTHOOK: query: create table foobar_1 ( dummyint int  , dummystr string )
+POSTHOOK: type: CREATETABLE
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@foobar_1
+PREHOOK: query: insert into table foobar_1 select count(*),'dummy 0'  from foobar_1
+PREHOOK: type: QUERY
+PREHOOK: Input: default@foobar_1
+PREHOOK: Output: default@foobar_1
+POSTHOOK: query: insert into table foobar_1 select count(*),'dummy 0'  from foobar_1
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@foobar_1
+POSTHOOK: Output: default@foobar_1
+POSTHOOK: Lineage: foobar_1.dummyint EXPRESSION []
+POSTHOOK: Lineage: foobar_1.dummystr SIMPLE []
+PREHOOK: query: drop table foobar_1M
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table foobar_1M
+POSTHOOK: type: DROPTABLE
+PREHOOK: query: create table foobar_1M ( dummyint bigint  , dummystr string )
+PREHOOK: type: CREATETABLE
+PREHOOK: Output: database:default
+PREHOOK: Output: default@foobar_1M
+POSTHOOK: query: create table foobar_1M ( dummyint bigint  , dummystr string )
+POSTHOOK: type: CREATETABLE
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@foobar_1M
+PREHOOK: query: insert overwrite table foobar_1M
+       select val_int  , concat('dummy ',val_int) from
+             ( select ((((((d_1*10)+d_2)*10+d_3)*10+d_4)*10+d_5)*10+d_6) as val_int from foobar_1
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_1 as d_1
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_2 as d_2
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_3 as d_3
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_4 as d_4
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_5 as d_5
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_6 as d_6  ) as f
+PREHOOK: type: QUERY
+PREHOOK: Input: default@foobar_1
+PREHOOK: Output: default@foobar_1m
+POSTHOOK: query: insert overwrite table foobar_1M
+       select val_int  , concat('dummy ',val_int) from
+             ( select ((((((d_1*10)+d_2)*10+d_3)*10+d_4)*10+d_5)*10+d_6) as val_int from foobar_1
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_1 as d_1
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_2 as d_2
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_3 as d_3
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_4 as d_4
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_5 as d_5
+                 lateral view outer explode(split("0,1,2,3,4,5,6,7,8,9",",")) tbl_6 as d_6  ) as f
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@foobar_1
+POSTHOOK: Output: default@foobar_1m
+POSTHOOK: Lineage: foobar_1m.dummyint SCRIPT [(foobar_1)foobar_1.FieldSchema(name:dummyint, type:int, comment:null), (foobar_1)foobar_1.FieldSchema(name:dummystr, type:string, comment:null), (foobar_1)foobar_1.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), (foobar_1)foobar_1.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), (foobar_1)foobar_1.FieldSchema(name:ROW__ID, type:struct<transactionId:bigint,bucketId:int,rowId:bigint>, comment:), ]
+POSTHOOK: Lineage: foobar_1m.dummystr SCRIPT [(foobar_1)foobar_1.FieldSchema(name:dummyint, type:int, comment:null), (foobar_1)foobar_1.FieldSchema(name:dummystr, type:string, comment:null), (foobar_1)foobar_1.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), (foobar_1)foobar_1.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), (foobar_1)foobar_1.FieldSchema(name:ROW__ID, type:struct<transactionId:bigint,bucketId:int,rowId:bigint>, comment:), ]
+PREHOOK: query: select count(*) , count(distinct dummyint ) , min(dummyint),max(dummyint) from foobar_1M
+PREHOOK: type: QUERY
+PREHOOK: Input: default@foobar_1m
+#### A masked pattern was here ####
+POSTHOOK: query: select count(*) , count(distinct dummyint ) , min(dummyint),max(dummyint) from foobar_1M
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@foobar_1m
+#### A masked pattern was here ####
+1000000	1000000	0	999999
+PREHOOK: query: select count(*) , count(distinct dummyint ) , min(dummyint),max(dummyint) from foobar_1M
+PREHOOK: type: QUERY
+PREHOOK: Input: default@foobar_1m
+#### A masked pattern was here ####
+POSTHOOK: query: select count(*) , count(distinct dummyint ) , min(dummyint),max(dummyint) from foobar_1M
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@foobar_1m
+#### A masked pattern was here ####
+1000000	1000000	0	999999

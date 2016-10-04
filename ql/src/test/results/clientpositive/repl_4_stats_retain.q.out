@@ -1,0 +1,699 @@
+PREHOOK: query: drop table if exists ptn_t
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table if exists ptn_t
+POSTHOOK: type: DROPTABLE
+PREHOOK: query: drop table if exists unptn_t
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table if exists unptn_t
+POSTHOOK: type: DROPTABLE
+PREHOOK: query: drop table if exists import_ptn_t_1
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table if exists import_ptn_t_1
+POSTHOOK: type: DROPTABLE
+PREHOOK: query: drop table if exists import_ptn_t_2
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table if exists import_ptn_t_2
+POSTHOOK: type: DROPTABLE
+PREHOOK: query: drop table if exists import_unptn_t_1
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table if exists import_unptn_t_1
+POSTHOOK: type: DROPTABLE
+PREHOOK: query: drop table if exists import_unptn_t_2
+PREHOOK: type: DROPTABLE
+POSTHOOK: query: drop table if exists import_unptn_t_2
+POSTHOOK: type: DROPTABLE
+#### A masked pattern was here ####
+PREHOOK: query: create table ptn_t (emp_id int comment "employee id")
+        partitioned by (emp_country string, emp_state string)
+        stored as textfile
+PREHOOK: type: CREATETABLE
+PREHOOK: Output: database:default
+PREHOOK: Output: default@ptn_t
+POSTHOOK: query: create table ptn_t (emp_id int comment "employee id")
+        partitioned by (emp_country string, emp_state string)
+        stored as textfile
+POSTHOOK: type: CREATETABLE
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@ptn_t
+PREHOOK: query: load data local inpath "../../data/files/test.dat"
+        into table ptn_t partition (emp_country="us",emp_state="ca")
+PREHOOK: type: LOAD
+#### A masked pattern was here ####
+PREHOOK: Output: default@ptn_t
+POSTHOOK: query: load data local inpath "../../data/files/test.dat"
+        into table ptn_t partition (emp_country="us",emp_state="ca")
+POSTHOOK: type: LOAD
+#### A masked pattern was here ####
+POSTHOOK: Output: default@ptn_t
+POSTHOOK: Output: default@ptn_t@emp_country=us/emp_state=ca
+PREHOOK: query: create table unptn_t(emp_id int comment "employee id")
+	stored as textfile
+PREHOOK: type: CREATETABLE
+PREHOOK: Output: database:default
+PREHOOK: Output: default@unptn_t
+POSTHOOK: query: create table unptn_t(emp_id int comment "employee id")
+	stored as textfile
+POSTHOOK: type: CREATETABLE
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@unptn_t
+PREHOOK: query: load data local inpath "../../data/files/test.dat"
+        into table unptn_t
+PREHOOK: type: LOAD
+#### A masked pattern was here ####
+PREHOOK: Output: default@unptn_t
+POSTHOOK: query: load data local inpath "../../data/files/test.dat"
+        into table unptn_t
+POSTHOOK: type: LOAD
+#### A masked pattern was here ####
+POSTHOOK: Output: default@unptn_t
+PREHOOK: query: -- We create a table, and export the table to an export location before and after an analyze table compute statistics
+
+describe extended ptn_t
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@ptn_t
+POSTHOOK: query: -- We create a table, and export the table to an export location before and after an analyze table compute statistics
+
+describe extended ptn_t
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@ptn_t
+emp_id              	int                 	employee id         
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+# Partition Information	 	 
+# col_name            	data_type           	comment             
+	 	 
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show table extended like 'ptn_t' partition(emp_country="us",emp_state="ca")
+PREHOOK: type: SHOW_TABLESTATUS
+POSTHOOK: query: show table extended like 'ptn_t' partition(emp_country="us",emp_state="ca")
+POSTHOOK: type: SHOW_TABLESTATUS
+tableName:ptn_t
+#### A masked pattern was here ####
+inputformat:org.apache.hadoop.mapred.TextInputFormat
+outputformat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+columns:struct columns { i32 emp_id}
+partitioned:true
+partitionColumns:struct partition_columns { string emp_country, string emp_state}
+totalNumberFiles:1
+totalFileSize:11
+maxFileSize:11
+minFileSize:11
+#### A masked pattern was here ####
+
+PREHOOK: query: show create table ptn_t
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@ptn_t
+POSTHOOK: query: show create table ptn_t
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@ptn_t
+CREATE TABLE `ptn_t`(
+  `emp_id` int COMMENT 'employee id')
+PARTITIONED BY ( 
+  `emp_country` string, 
+  `emp_state` string)
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+#### A masked pattern was here ####
+PREHOOK: query: export table ptn_t to 'ql/test/data/exports/ptn_t_1' for replication('ptn_t_1')
+PREHOOK: type: EXPORT
+PREHOOK: Input: default@ptn_t@emp_country=us/emp_state=ca
+#### A masked pattern was here ####
+POSTHOOK: query: export table ptn_t to 'ql/test/data/exports/ptn_t_1' for replication('ptn_t_1')
+POSTHOOK: type: EXPORT
+POSTHOOK: Input: default@ptn_t@emp_country=us/emp_state=ca
+#### A masked pattern was here ####
+PREHOOK: query: analyze table ptn_t partition(emp_country="us",emp_state="ca") compute statistics
+PREHOOK: type: QUERY
+PREHOOK: Input: default@ptn_t
+PREHOOK: Input: default@ptn_t@emp_country=us/emp_state=ca
+PREHOOK: Output: default@ptn_t
+PREHOOK: Output: default@ptn_t@emp_country=us/emp_state=ca
+POSTHOOK: query: analyze table ptn_t partition(emp_country="us",emp_state="ca") compute statistics
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@ptn_t
+POSTHOOK: Input: default@ptn_t@emp_country=us/emp_state=ca
+POSTHOOK: Output: default@ptn_t
+POSTHOOK: Output: default@ptn_t@emp_country=us/emp_state=ca
+PREHOOK: query: describe extended ptn_t
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@ptn_t
+POSTHOOK: query: describe extended ptn_t
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@ptn_t
+emp_id              	int                 	employee id         
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+# Partition Information	 	 
+# col_name            	data_type           	comment             
+	 	 
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show table extended like 'ptn_t' partition(emp_country="us",emp_state="ca")
+PREHOOK: type: SHOW_TABLESTATUS
+POSTHOOK: query: show table extended like 'ptn_t' partition(emp_country="us",emp_state="ca")
+POSTHOOK: type: SHOW_TABLESTATUS
+tableName:ptn_t
+#### A masked pattern was here ####
+inputformat:org.apache.hadoop.mapred.TextInputFormat
+outputformat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+columns:struct columns { i32 emp_id}
+partitioned:true
+partitionColumns:struct partition_columns { string emp_country, string emp_state}
+totalNumberFiles:1
+totalFileSize:11
+maxFileSize:11
+minFileSize:11
+#### A masked pattern was here ####
+
+PREHOOK: query: show create table ptn_t
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@ptn_t
+POSTHOOK: query: show create table ptn_t
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@ptn_t
+CREATE TABLE `ptn_t`(
+  `emp_id` int COMMENT 'employee id')
+PARTITIONED BY ( 
+  `emp_country` string, 
+  `emp_state` string)
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+#### A masked pattern was here ####
+PREHOOK: query: export table ptn_t to 'ql/test/data/exports/ptn_t_2' for replication('ptn_t_2')
+PREHOOK: type: EXPORT
+PREHOOK: Input: default@ptn_t@emp_country=us/emp_state=ca
+#### A masked pattern was here ####
+POSTHOOK: query: export table ptn_t to 'ql/test/data/exports/ptn_t_2' for replication('ptn_t_2')
+POSTHOOK: type: EXPORT
+POSTHOOK: Input: default@ptn_t@emp_country=us/emp_state=ca
+#### A masked pattern was here ####
+PREHOOK: query: drop table ptn_t
+PREHOOK: type: DROPTABLE
+PREHOOK: Input: default@ptn_t
+PREHOOK: Output: default@ptn_t
+POSTHOOK: query: drop table ptn_t
+POSTHOOK: type: DROPTABLE
+POSTHOOK: Input: default@ptn_t
+POSTHOOK: Output: default@ptn_t
+PREHOOK: query: -- Now the same for the unpartitioned table
+
+describe extended unptn_t
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@unptn_t
+POSTHOOK: query: -- Now the same for the unpartitioned table
+
+describe extended unptn_t
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@unptn_t
+emp_id              	int                 	employee id         
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show create table unptn_t
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@unptn_t
+POSTHOOK: query: show create table unptn_t
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@unptn_t
+CREATE TABLE `unptn_t`(
+  `emp_id` int COMMENT 'employee id')
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+  'numFiles'='1', 
+  'numRows'='0', 
+  'rawDataSize'='0', 
+  'totalSize'='11', 
+#### A masked pattern was here ####
+PREHOOK: query: export table unptn_t to 'ql/test/data/exports/unptn_t_1' for replication('unptn_t_1')
+PREHOOK: type: EXPORT
+PREHOOK: Input: default@unptn_t
+#### A masked pattern was here ####
+POSTHOOK: query: export table unptn_t to 'ql/test/data/exports/unptn_t_1' for replication('unptn_t_1')
+POSTHOOK: type: EXPORT
+POSTHOOK: Input: default@unptn_t
+#### A masked pattern was here ####
+PREHOOK: query: analyze table unptn_t compute statistics
+PREHOOK: type: QUERY
+PREHOOK: Input: default@unptn_t
+PREHOOK: Output: default@unptn_t
+POSTHOOK: query: analyze table unptn_t compute statistics
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@unptn_t
+POSTHOOK: Output: default@unptn_t
+PREHOOK: query: describe extended unptn_t
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@unptn_t
+POSTHOOK: query: describe extended unptn_t
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@unptn_t
+emp_id              	int                 	employee id         
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show create table unptn_t
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@unptn_t
+POSTHOOK: query: show create table unptn_t
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@unptn_t
+CREATE TABLE `unptn_t`(
+  `emp_id` int COMMENT 'employee id')
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+  'COLUMN_STATS_ACCURATE'='{\"BASIC_STATS\":\"true\"}', 
+  'numFiles'='1', 
+  'numRows'='6', 
+  'rawDataSize'='6', 
+  'totalSize'='11', 
+#### A masked pattern was here ####
+PREHOOK: query: export table unptn_t to 'ql/test/data/exports/unptn_t_2' for replication('unptn_t_2')
+PREHOOK: type: EXPORT
+PREHOOK: Input: default@unptn_t
+#### A masked pattern was here ####
+POSTHOOK: query: export table unptn_t to 'ql/test/data/exports/unptn_t_2' for replication('unptn_t_2')
+POSTHOOK: type: EXPORT
+POSTHOOK: Input: default@unptn_t
+#### A masked pattern was here ####
+PREHOOK: query: drop table unptn_t
+PREHOOK: type: DROPTABLE
+PREHOOK: Input: default@unptn_t
+PREHOOK: Output: default@unptn_t
+POSTHOOK: query: drop table unptn_t
+POSTHOOK: type: DROPTABLE
+POSTHOOK: Input: default@unptn_t
+POSTHOOK: Output: default@unptn_t
+PREHOOK: query: -- Now we import
+
+explain import table import_ptn_t_1 from 'ql/test/data/exports/ptn_t_1'
+PREHOOK: type: IMPORT
+POSTHOOK: query: -- Now we import
+
+explain import table import_ptn_t_1 from 'ql/test/data/exports/ptn_t_1'
+POSTHOOK: type: IMPORT
+STAGE DEPENDENCIES:
+  Stage-1 is a root stage
+  Stage-3 depends on stages: Stage-1, Stage-2
+  Stage-0 is a root stage
+  Stage-2 depends on stages: Stage-0
+
+STAGE PLANS:
+  Stage: Stage-1
+    Copy
+#### A masked pattern was here ####
+
+  Stage: Stage-3
+    Move Operator
+      tables:
+          partition:
+            emp_country us
+            emp_state ca
+          replace: true
+          table:
+              input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              serde: org.apache.hadoop.hive.serde2.MetadataTypedColumnsetSerDe
+              name: default.import_ptn_t_1
+
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: emp_id int employee id
+          input format: org.apache.hadoop.mapred.TextInputFormat
+#### A masked pattern was here ####
+          output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          partition columns: emp_country string, emp_state string
+          serde name: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+          serde properties:
+            serialization.format 1
+          name: import_ptn_t_1
+          table properties:
+            repl.last.id 0
+#### A masked pattern was here ####
+
+  Stage: Stage-2
+      Add Partition Operator:
+#### A masked pattern was here ####
+          Spec: {emp_country=us, emp_state=ca}
+
+PREHOOK: query: import table import_ptn_t_1 from 'ql/test/data/exports/ptn_t_1'
+PREHOOK: type: IMPORT
+#### A masked pattern was here ####
+PREHOOK: Output: default@import_ptn_t_1
+POSTHOOK: query: import table import_ptn_t_1 from 'ql/test/data/exports/ptn_t_1'
+POSTHOOK: type: IMPORT
+#### A masked pattern was here ####
+POSTHOOK: Output: default@import_ptn_t_1
+POSTHOOK: Output: default@import_ptn_t_1@emp_country=us/emp_state=ca
+PREHOOK: query: describe extended import_ptn_t_1
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@import_ptn_t_1
+POSTHOOK: query: describe extended import_ptn_t_1
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@import_ptn_t_1
+emp_id              	int                 	employee id         
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+# Partition Information	 	 
+# col_name            	data_type           	comment             
+	 	 
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show table extended like 'import_ptn_t_1' partition(emp_country="us",emp_state="ca")
+PREHOOK: type: SHOW_TABLESTATUS
+POSTHOOK: query: show table extended like 'import_ptn_t_1' partition(emp_country="us",emp_state="ca")
+POSTHOOK: type: SHOW_TABLESTATUS
+tableName:import_ptn_t_1
+#### A masked pattern was here ####
+inputformat:org.apache.hadoop.mapred.TextInputFormat
+outputformat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+columns:struct columns { i32 emp_id}
+partitioned:true
+partitionColumns:struct partition_columns { string emp_country, string emp_state}
+totalNumberFiles:1
+totalFileSize:11
+maxFileSize:11
+minFileSize:11
+#### A masked pattern was here ####
+
+PREHOOK: query: show create table import_ptn_t_1
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@import_ptn_t_1
+POSTHOOK: query: show create table import_ptn_t_1
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@import_ptn_t_1
+CREATE TABLE `import_ptn_t_1`(
+  `emp_id` int COMMENT 'employee id')
+PARTITIONED BY ( 
+  `emp_country` string, 
+  `emp_state` string)
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+  'repl.last.id'='0', 
+#### A masked pattern was here ####
+PREHOOK: query: explain import table import_ptn_t_2 from 'ql/test/data/exports/ptn_t_2'
+PREHOOK: type: IMPORT
+POSTHOOK: query: explain import table import_ptn_t_2 from 'ql/test/data/exports/ptn_t_2'
+POSTHOOK: type: IMPORT
+STAGE DEPENDENCIES:
+  Stage-1 is a root stage
+  Stage-3 depends on stages: Stage-1, Stage-2
+  Stage-0 is a root stage
+  Stage-2 depends on stages: Stage-0
+
+STAGE PLANS:
+  Stage: Stage-1
+    Copy
+#### A masked pattern was here ####
+
+  Stage: Stage-3
+    Move Operator
+      tables:
+          partition:
+            emp_country us
+            emp_state ca
+          replace: true
+          table:
+              input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              serde: org.apache.hadoop.hive.serde2.MetadataTypedColumnsetSerDe
+              name: default.import_ptn_t_2
+
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: emp_id int employee id
+          input format: org.apache.hadoop.mapred.TextInputFormat
+#### A masked pattern was here ####
+          output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          partition columns: emp_country string, emp_state string
+          serde name: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+          serde properties:
+            serialization.format 1
+          name: import_ptn_t_2
+          table properties:
+            repl.last.id 0
+#### A masked pattern was here ####
+
+  Stage: Stage-2
+      Add Partition Operator:
+#### A masked pattern was here ####
+          Spec: {emp_country=us, emp_state=ca}
+
+PREHOOK: query: import table import_ptn_t_2 from 'ql/test/data/exports/ptn_t_2'
+PREHOOK: type: IMPORT
+#### A masked pattern was here ####
+PREHOOK: Output: default@import_ptn_t_2
+POSTHOOK: query: import table import_ptn_t_2 from 'ql/test/data/exports/ptn_t_2'
+POSTHOOK: type: IMPORT
+#### A masked pattern was here ####
+POSTHOOK: Output: default@import_ptn_t_2
+POSTHOOK: Output: default@import_ptn_t_2@emp_country=us/emp_state=ca
+PREHOOK: query: describe extended import_ptn_t_2
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@import_ptn_t_2
+POSTHOOK: query: describe extended import_ptn_t_2
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@import_ptn_t_2
+emp_id              	int                 	employee id         
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+# Partition Information	 	 
+# col_name            	data_type           	comment             
+	 	 
+emp_country         	string              	                    
+emp_state           	string              	                    
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show table extended like 'import_ptn_t_2' partition(emp_country="us",emp_state="ca")
+PREHOOK: type: SHOW_TABLESTATUS
+POSTHOOK: query: show table extended like 'import_ptn_t_2' partition(emp_country="us",emp_state="ca")
+POSTHOOK: type: SHOW_TABLESTATUS
+tableName:import_ptn_t_2
+#### A masked pattern was here ####
+inputformat:org.apache.hadoop.mapred.TextInputFormat
+outputformat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+columns:struct columns { i32 emp_id}
+partitioned:true
+partitionColumns:struct partition_columns { string emp_country, string emp_state}
+totalNumberFiles:1
+totalFileSize:11
+maxFileSize:11
+minFileSize:11
+#### A masked pattern was here ####
+
+PREHOOK: query: show create table import_ptn_t_2
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@import_ptn_t_2
+POSTHOOK: query: show create table import_ptn_t_2
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@import_ptn_t_2
+CREATE TABLE `import_ptn_t_2`(
+  `emp_id` int COMMENT 'employee id')
+PARTITIONED BY ( 
+  `emp_country` string, 
+  `emp_state` string)
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+  'repl.last.id'='0', 
+#### A masked pattern was here ####
+PREHOOK: query: import table import_unptn_t_1 from 'ql/test/data/exports/unptn_t_1'
+PREHOOK: type: IMPORT
+#### A masked pattern was here ####
+PREHOOK: Output: default@import_unptn_t_1
+POSTHOOK: query: import table import_unptn_t_1 from 'ql/test/data/exports/unptn_t_1'
+POSTHOOK: type: IMPORT
+#### A masked pattern was here ####
+POSTHOOK: Output: default@import_unptn_t_1
+PREHOOK: query: describe extended import_unptn_t_1
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@import_unptn_t_1
+POSTHOOK: query: describe extended import_unptn_t_1
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@import_unptn_t_1
+emp_id              	int                 	employee id         
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show table extended like 'import_unptn_t_1'
+PREHOOK: type: SHOW_TABLESTATUS
+POSTHOOK: query: show table extended like 'import_unptn_t_1'
+POSTHOOK: type: SHOW_TABLESTATUS
+tableName:import_unptn_t_1
+#### A masked pattern was here ####
+inputformat:org.apache.hadoop.mapred.TextInputFormat
+outputformat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+columns:struct columns { i32 emp_id}
+partitioned:false
+partitionColumns:
+totalNumberFiles:1
+totalFileSize:11
+maxFileSize:11
+minFileSize:11
+#### A masked pattern was here ####
+
+PREHOOK: query: show create table import_unptn_t_1
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@import_unptn_t_1
+POSTHOOK: query: show create table import_unptn_t_1
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@import_unptn_t_1
+CREATE TABLE `import_unptn_t_1`(
+  `emp_id` int COMMENT 'employee id')
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+  'numFiles'='1', 
+  'numRows'='0', 
+  'rawDataSize'='0', 
+  'repl.last.id'='0', 
+  'totalSize'='11', 
+#### A masked pattern was here ####
+PREHOOK: query: import table import_unptn_t_2 from 'ql/test/data/exports/unptn_t_2'
+PREHOOK: type: IMPORT
+#### A masked pattern was here ####
+PREHOOK: Output: default@import_unptn_t_2
+POSTHOOK: query: import table import_unptn_t_2 from 'ql/test/data/exports/unptn_t_2'
+POSTHOOK: type: IMPORT
+#### A masked pattern was here ####
+POSTHOOK: Output: default@import_unptn_t_2
+PREHOOK: query: describe extended import_unptn_t_2
+PREHOOK: type: DESCTABLE
+PREHOOK: Input: default@import_unptn_t_2
+POSTHOOK: query: describe extended import_unptn_t_2
+POSTHOOK: type: DESCTABLE
+POSTHOOK: Input: default@import_unptn_t_2
+emp_id              	int                 	employee id         
+	 	 
+#### A masked pattern was here ####
+PREHOOK: query: show table extended like 'import_unptn_t_2'
+PREHOOK: type: SHOW_TABLESTATUS
+POSTHOOK: query: show table extended like 'import_unptn_t_2'
+POSTHOOK: type: SHOW_TABLESTATUS
+tableName:import_unptn_t_2
+#### A masked pattern was here ####
+inputformat:org.apache.hadoop.mapred.TextInputFormat
+outputformat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+columns:struct columns { i32 emp_id}
+partitioned:false
+partitionColumns:
+totalNumberFiles:1
+totalFileSize:11
+maxFileSize:11
+minFileSize:11
+#### A masked pattern was here ####
+
+PREHOOK: query: show create table import_unptn_t_2
+PREHOOK: type: SHOW_CREATETABLE
+PREHOOK: Input: default@import_unptn_t_2
+POSTHOOK: query: show create table import_unptn_t_2
+POSTHOOK: type: SHOW_CREATETABLE
+POSTHOOK: Input: default@import_unptn_t_2
+CREATE TABLE `import_unptn_t_2`(
+  `emp_id` int COMMENT 'employee id')
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+#### A masked pattern was here ####
+TBLPROPERTIES (
+  'numFiles'='1', 
+  'numRows'='6', 
+  'rawDataSize'='6', 
+  'repl.last.id'='0', 
+  'totalSize'='11', 
+#### A masked pattern was here ####
+PREHOOK: query: -- clean up
+
+drop table import_ptn_t_1
+PREHOOK: type: DROPTABLE
+PREHOOK: Input: default@import_ptn_t_1
+PREHOOK: Output: default@import_ptn_t_1
+POSTHOOK: query: -- clean up
+
+drop table import_ptn_t_1
+POSTHOOK: type: DROPTABLE
+POSTHOOK: Input: default@import_ptn_t_1
+POSTHOOK: Output: default@import_ptn_t_1
+PREHOOK: query: drop table import_ptn_t_2
+PREHOOK: type: DROPTABLE
+PREHOOK: Input: default@import_ptn_t_2
+PREHOOK: Output: default@import_ptn_t_2
+POSTHOOK: query: drop table import_ptn_t_2
+POSTHOOK: type: DROPTABLE
+POSTHOOK: Input: default@import_ptn_t_2
+POSTHOOK: Output: default@import_ptn_t_2
+PREHOOK: query: drop table import_unptn_t_1
+PREHOOK: type: DROPTABLE
+PREHOOK: Input: default@import_unptn_t_1
+PREHOOK: Output: default@import_unptn_t_1
+POSTHOOK: query: drop table import_unptn_t_1
+POSTHOOK: type: DROPTABLE
+POSTHOOK: Input: default@import_unptn_t_1
+POSTHOOK: Output: default@import_unptn_t_1
+PREHOOK: query: drop table import_unptn_t_2
+PREHOOK: type: DROPTABLE
+PREHOOK: Input: default@import_unptn_t_2
+PREHOOK: Output: default@import_unptn_t_2
+POSTHOOK: query: drop table import_unptn_t_2
+POSTHOOK: type: DROPTABLE
+POSTHOOK: Input: default@import_unptn_t_2
+POSTHOOK: Output: default@import_unptn_t_2

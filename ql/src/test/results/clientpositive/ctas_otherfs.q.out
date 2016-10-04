@@ -1,0 +1,34 @@
+PREHOOK: query: create table ctas_otherfs
+#### A masked pattern was here ####
+  as select key, value from src limit 2
+PREHOOK: type: CREATETABLE_AS_SELECT
+PREHOOK: Input: default@src
+#### A masked pattern was here ####
+PREHOOK: Output: database:default
+PREHOOK: Output: default@ctas_otherfs
+POSTHOOK: query: create table ctas_otherfs
+#### A masked pattern was here ####
+  as select key, value from src limit 2
+POSTHOOK: type: CREATETABLE_AS_SELECT
+POSTHOOK: Input: default@src
+#### A masked pattern was here ####
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@ctas_otherfs
+PREHOOK: query: select * from ctas_otherfs
+PREHOOK: type: QUERY
+PREHOOK: Input: default@ctas_otherfs
+#### A masked pattern was here ####
+POSTHOOK: query: select * from ctas_otherfs
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@ctas_otherfs
+#### A masked pattern was here ####
+86	val_86
+238	val_238
+PREHOOK: query: drop table ctas_otherfs
+PREHOOK: type: DROPTABLE
+PREHOOK: Input: default@ctas_otherfs
+PREHOOK: Output: default@ctas_otherfs
+POSTHOOK: query: drop table ctas_otherfs
+POSTHOOK: type: DROPTABLE
+POSTHOOK: Input: default@ctas_otherfs
+POSTHOOK: Output: default@ctas_otherfs
